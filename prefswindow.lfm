@@ -1,0 +1,87 @@
+object PrefsForm: TPrefsForm
+  Left = 287
+  Height = 379
+  Top = 150
+  Width = 521
+  Caption = 'Application Settings'
+  ClientHeight = 379
+  ClientWidth = 521
+  OnCreate = FormCreate
+  SessionProperties = 'BasePath.Text;CategoryList.Items'
+  LCLVersion = '2.2.6.0'
+  object Label1: TLabel
+    Left = 16
+    Height = 18
+    Top = 22
+    Width = 88
+    Caption = 'Base Path:'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object BasePath: TDirectoryEdit
+    Left = 104
+    Height = 26
+    Top = 16
+    Width = 408
+    Directory = 'BasePath'
+    ShowHidden = False
+    ButtonWidth = 23
+    NumGlyphs = 1
+    MaxLength = 0
+    TabOrder = 0
+    Text = 'BasePath'
+  end
+  object Label2: TLabel
+    Left = 16
+    Height = 18
+    Top = 80
+    Width = 175
+    Caption = 'Emulator Categories:'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object CategoryList: TListBox
+    Left = 16
+    Height = 240
+    Top = 104
+    Width = 208
+    ItemHeight = 0
+    TabOrder = 1
+    TopIndex = -1
+  end
+  object AddCategoryBtn: TSpeedButton
+    Left = 16
+    Height = 22
+    Top = 344
+    Width = 23
+    Images = RetroBoxForm.ImageList
+    ImageIndex = 2
+    OnClick = AddCategoryBtnClick
+  end
+  object DelCategoryBtn: TSpeedButton
+    Left = 40
+    Height = 22
+    Top = 344
+    Width = 23
+    Images = RetroBoxForm.ImageList
+    ImageIndex = 3
+    OnClick = DelCategoryBtnClick
+  end
+  object EditCategoryBtn: TSpeedButton
+    Left = 64
+    Height = 22
+    Top = 344
+    Width = 23
+    Images = RetroBoxForm.ImageList
+    ImageIndex = 4
+    OnClick = EditCategoryBtnClick
+  end
+  object XMLPropStorage: TXMLPropStorage
+    StoredValues = <>
+    FileName = 'test.xml'
+    Left = 432
+    Top = 48
+  end
+end

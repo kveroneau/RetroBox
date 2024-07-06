@@ -1,0 +1,6 @@
+RetroBox
+*.lps
+*.res
+*.dbg
+backup/
+lib/
