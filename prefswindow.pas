@@ -14,12 +14,15 @@ type
 
   TPrefsForm = class(TForm)
     BasePath: TDirectoryEdit;
+    TermOnClose: TCheckBox;
+    EmulatorPath: TFileNameEdit;
     Label1: TLabel;
     Label2: TLabel;
     CategoryList: TListBox;
     AddCategoryBtn: TSpeedButton;
     DelCategoryBtn: TSpeedButton;
     EditCategoryBtn: TSpeedButton;
+    Label3: TLabel;
     XMLPropStorage: TXMLPropStorage;
     procedure AddCategoryBtnClick(Sender: TObject);
     procedure DelCategoryBtnClick(Sender: TObject);
@@ -42,7 +45,14 @@ implementation
 
 procedure TPrefsForm.FormCreate(Sender: TObject);
 begin
-
+  if EmulatorPath.Text = 'EmulatorPath' then
+  {$IFDEF UNIX}
+    EmulatorPath.Text:='/usr/bin/86Box';
+  EmulatorPath.Filter:='86Box Emulator|86Box';
+  {$ELSE}
+    EmulatorPath.Text:='';
+  EmulatorPath.Filter:='86Box Emulator|86Box.exe'
+  {$ENDIF}
 end;
 
 procedure TPrefsForm.AddCategoryBtnClick(Sender: TObject);

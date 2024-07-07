@@ -78,10 +78,42 @@ object PrefsForm: TPrefsForm
     ImageIndex = 4
     OnClick = EditCategoryBtnClick
   end
+  object Label3: TLabel
+    Left = 16
+    Height = 18
+    Top = 56
+    Width = 132
+    Caption = '86Box Program:'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object EmulatorPath: TFileNameEdit
+    Left = 152
+    Height = 26
+    Top = 48
+    Width = 360
+    FileName = 'EmulatorPath'
+    FilterIndex = 0
+    HideDirectories = False
+    ButtonWidth = 23
+    NumGlyphs = 1
+    MaxLength = 0
+    TabOrder = 2
+    Text = 'EmulatorPath'
+  end
+  object TermOnClose: TCheckBox
+    Left = 240
+    Height = 22
+    Top = 104
+    Width = 255
+    Caption = 'Terminate all Systems on Close'
+    TabOrder = 3
+  end
   object XMLPropStorage: TXMLPropStorage
     StoredValues = <>
     FileName = 'test.xml'
     Left = 432
-    Top = 48
+    Top = 304
   end
 end

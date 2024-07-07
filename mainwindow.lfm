@@ -6,6 +6,7 @@ object RetroBoxForm: TRetroBoxForm
   Caption = 'RetroBox'
   ClientHeight = 351
   ClientWidth = 647
+  OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnResize = FormResize
@@ -33,10 +34,13 @@ object RetroBoxForm: TRetroBoxForm
         Top = 0
         Width = 209
         Images = ImageList
+        PopupMenu = TreeMenu
         ReadOnly = True
         ScrollBars = ssAutoBoth
         StateImages = ImageList
         TabOrder = 0
+        OnClick = MachineTreeClick
+        OnDblClick = MachineTreeDblClick
         Options = [tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoReadOnly, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips, tvoThemedDraw]
       end
     end
@@ -48,16 +52,44 @@ object RetroBoxForm: TRetroBoxForm
       Width = 243
       ClientWidth = 243
       ClientHeight = 328
-      object Button1: TButton
-        Left = 168
-        Height = 25
-        Top = 168
-        Width = 75
-        Caption = 'Button1'
-        OnClick = Button1Click
+      object TabControl: TPageControl
+        Left = 0
+        Height = 280
+        Top = 0
+        Width = 296
+        ActivePage = ConfigTab
+        TabIndex = 1
         TabOrder = 0
+        OnResize = TabControlResize
+        object InfoTab: TTabSheet
+          Caption = 'Info'
+        end
+        object ConfigTab: TTabSheet
+          Caption = 'Configuration'
+          ClientHeight = 248
+          ClientWidth = 292
+          OnResize = ConfigTabResize
+          object ConfigData: TMemo
+            Left = 0
+            Height = 168
+            Top = 0
+            Width = 214
+            Lines.Strings = (
+              'ConfigData'
+            )
+            ScrollBars = ssAutoBoth
+            TabOrder = 0
+          end
+        end
       end
     end
+  end
+  object StatusBar: TStatusBar
+    Left = 0
+    Height = 22
+    Top = 329
+    Width = 647
+    Panels = <>
   end
   object ImageList: TImageList
     Left = 560
@@ -104,5 +136,32 @@ object RetroBoxForm: TRetroBoxForm
       3873D8B7C4D7A773AD79E6BF83A0A0F0C0C0406C24393E4C6C4C8DFC49F4F452
       DE464040C08B4C0E661DCB7995FF00FCCA6110
     }
+  end
+  object TreeMenu: TPopupMenu
+    Images = ImageList
+    Left = 560
+    Top = 88
+    object ImportMenu: TMenuItem
+      Caption = 'Import System...'
+      ImageIndex = 2
+      OnClick = ImportMenuClick
+    end
+    object AddMenu: TMenuItem
+      Caption = 'Add System...'
+      ImageIndex = 2
+      OnClick = AddMenuClick
+    end
+  end
+  object OpenDialog: TOpenDialog
+    FileName = '86box.cfg'
+    Filter = '86Box Config|86box.cfg'
+    Left = 560
+    Top = 152
+  end
+  object Timer: TTimer
+    Enabled = False
+    OnTimer = TimerTimer
+    Left = 560
+    Top = 216
   end
 end
