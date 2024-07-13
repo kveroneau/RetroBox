@@ -12,11 +12,17 @@
         <DpiAware Value="True"/>
       </XPManifest>
       <Icon Value="0"/>
-      <Resources Count="4">
+      <Resources Count="10">
         <Resource_0 FileName="templates/TallGrass.cfg" Type="RCDATA" ResourceName="TALLGRASS"/>
         <Resource_1 FileName="templates/ibmps2_m60.nvr" Type="RCDATA" ResourceName="IBMPS2_M60"/>
         <Resource_2 FileName="templates/asus386.cfg" Type="RCDATA" ResourceName="ASUS386"/>
         <Resource_3 FileName="templates/asus386nvr.nvr" Type="RCDATA" ResourceName="ASUS386NVR"/>
+        <Resource_4 FileName="templates/ali486.cfg" Type="RCDATA" ResourceName="ALI486"/>
+        <Resource_5 FileName="templates/ali1429.nvr" Type="RCDATA" ResourceName="ALI1429"/>
+        <Resource_6 FileName="templates/pentium.cfg" Type="RCDATA" ResourceName="PENTIUM"/>
+        <Resource_7 FileName="templates/opti560l.nvr" Type="RCDATA" ResourceName="OPTI560L"/>
+        <Resource_8 FileName="templates/aptiva.cfg" Type="RCDATA" ResourceName="APTIVA"/>
+        <Resource_9 FileName="templates/p5a.nvr" Type="RCDATA" ResourceName="P5A"/>
       </Resources>
     </General>
     <BuildModes>
@@ -140,6 +146,7 @@
         <Filename Value="newsystemwindow.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="NewSystemForm"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="NewSystemWindow"/>
       </Unit>
