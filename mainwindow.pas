@@ -60,6 +60,7 @@ type
     procedure AddSystem(node: TTreeNode; title, path: string);
     procedure SaveSystems;
     procedure LoadSystems;
+    procedure ExtractConfig(cfgres, nvres, target, nvrFile: string);
   public
 
   end;
@@ -186,6 +187,8 @@ begin
   if tmp = '' then
     Exit;
   CreateDir(PrefsForm.BasePath.Directory+'/'+tmp);
+  CreateDir(PrefsForm.BasePath.Directory+'/'+tmp+'/nvr');
+  ExtractConfig('TALLGRASS', 'IBMPS2_M60', PrefsForm.BasePath.Directory+'/'+tmp, 'ibmps2_m60.nvr');
   AddSystem(MachineTree.Selected, tmp, tmp);
   BoxSettings.Executable:=PrefsForm.EmulatorPath.FileName;
   BoxSettings.CurrentDirectory:=PrefsForm.BasePath.Directory+'/'+tmp;
@@ -328,6 +331,24 @@ begin
     end;
   finally
     f.Free;
+  end;
+end;
+
+procedure TRetroBoxForm.ExtractConfig(cfgres, nvres, target, nvrFile: string);
+var
+  res: TResourceStream;
+begin
+  res:=TResourceStream.Create(HINSTANCE, cfgres, RT_RCDATA);
+  try
+    res.SaveToFile(target+'/86box.cfg');
+  finally
+    res.Free;
+  end;
+  res:=TResourceStream.Create(HINSTANCE, nvres, RT_RCDATA);
+  try
+    res.SaveToFile(target+'/nvr/'+nvrFile);
+  finally
+    res.Free;
   end;
 end;
 

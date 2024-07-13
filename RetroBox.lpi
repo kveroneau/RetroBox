@@ -12,6 +12,10 @@
         <DpiAware Value="True"/>
       </XPManifest>
       <Icon Value="0"/>
+      <Resources Count="2">
+        <Resource_0 FileName="templates/TallGrass.cfg" Type="RCDATA" ResourceName="TALLGRASS"/>
+        <Resource_1 FileName="templates/ibmps2_m60.nvr" Type="RCDATA" ResourceName="IBMPS2_M60"/>
+      </Resources>
     </General>
     <BuildModes>
       <Item Name="Default" Default="True"/>
