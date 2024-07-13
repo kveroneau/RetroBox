@@ -101,6 +101,15 @@ object RetroBoxForm: TRetroBoxForm
             Caption = 'BoxPath'
             ParentColor = False
           end
+          object BoxSettingBtn: TButton
+            Left = 8
+            Height = 25
+            Top = 80
+            Width = 112
+            Caption = 'Box Settings'
+            OnClick = BoxSettingBtnClick
+            TabOrder = 1
+          end
         end
         object ConfigTab: TTabSheet
           Caption = 'Configuration'
@@ -214,5 +223,24 @@ object RetroBoxForm: TRetroBoxForm
     OnTimer = TimerTimer
     Left = 560
     Top = 216
+  end
+  object BoxSettings: TProcess
+    Active = False
+    Parameters.Strings = (
+      '-S'
+    )
+    Options = []
+    Priority = ppNormal
+    StartupOptions = []
+    ShowWindow = swoNone
+    WindowColumns = 0
+    WindowHeight = 0
+    WindowLeft = 0
+    WindowRows = 0
+    WindowTop = 0
+    WindowWidth = 0
+    FillAttribute = 0
+    Left = 560
+    Top = 280
   end
 end

@@ -15,6 +15,7 @@ type
   TRetroBoxForm = class(TForm)
     AddMenu: TMenuItem;
     BoxTitle: TEdit;
+    BoxSettingBtn: TButton;
     ImageList: TImageList;
     ImportMenu: TMenuItem;
     ConfigData: TMemo;
@@ -24,6 +25,7 @@ type
     DeleteMenu: TMenuItem;
     PrefsMenu: TMenuItem;
     OpenDialog: TOpenDialog;
+    BoxSettings: TProcess;
     Separator1: TMenuItem;
     TabControl: TPageControl;
     PairSplitter: TPairSplitter;
@@ -36,6 +38,7 @@ type
     InfoPane: TPairSplitterSide;
     MachineTree: TTreeView;
     procedure AddMenuClick(Sender: TObject);
+    procedure BoxSettingBtnClick(Sender: TObject);
     procedure ConfigTabResize(Sender: TObject);
     procedure DeleteMenuClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -173,6 +176,17 @@ end;
 procedure TRetroBoxForm.AddMenuClick(Sender: TObject);
 begin
 
+end;
+
+procedure TRetroBoxForm.BoxSettingBtnClick(Sender: TObject);
+begin
+  if MachineTree.Selected.Data = Nil then
+    Exit;
+  BoxSettings.Executable:=PrefsForm.EmulatorPath.FileName;
+  BoxSettings.CurrentDirectory:=PrefsForm.BasePath.Directory+'/'+PBoxInfo(MachineTree.Selected.Data)^.path;
+  BoxSettings.Active:=True;
+  BoxSettings.WaitOnExit;
+  BoxSettings.Active:=False;
 end;
 
 procedure TRetroBoxForm.FormDestroy(Sender: TObject);
