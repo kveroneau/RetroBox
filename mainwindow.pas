@@ -48,6 +48,7 @@ type
     procedure RenderTree;
     procedure AddSystem(node: TTreeNode; title, path: string);
     procedure SaveSystems;
+    procedure LoadSystems;
   public
 
   end;
@@ -72,6 +73,7 @@ begin
   if PrefsForm.BasePath.Text = 'BasePath' then
     PrefsForm.ShowModal;
   RenderTree;
+  LoadSystems;
   StatusBar.SimpleText:='Ready.';
 end;
 
@@ -118,7 +120,7 @@ end;
 
 procedure TRetroBoxForm.FormCreate(Sender: TObject);
 begin
-  WriteLn(OpenDialog.Filter);
+
 end;
 
 procedure TRetroBoxForm.Button1Click(Sender: TObject);
@@ -240,6 +242,31 @@ begin
       if MachineTree.Items.Item[i].Data <> Nil then
         f.Write(PBoxInfo(MachineTree.Items.Item[i].Data)^, SizeOf(TBoxInfo));
     f.SaveToFile('machines.dat');
+  finally
+    f.Free;
+  end;
+end;
+
+procedure TRetroBoxForm.LoadSystems;
+var
+  i: integer;
+  f: TMemoryStream;
+  m: PBoxInfo;
+  cat, vm: TTreeNode;
+begin
+  f:=TMemoryStream.Create;
+  try
+    f.LoadFromFile('machines.dat');
+    for i:=0 to (f.Size div SizeOf(TBoxInfo))-1 do
+    begin
+      New(m);
+      f.Read(m^, SizeOf(TBoxInfo));
+      cat:=MachineTree.Items.FindNodeWithText(m^.category);
+      vm:=MachineTree.Items.AddChild(cat, m^.title);
+      vm.ImageIndex:=m^.icon;
+      vm.SelectedIndex:=m^.icon;
+      vm.Data:=m;
+    end;
   finally
     f.Free;
   end;
