@@ -110,9 +110,9 @@ procedure TRetroBoxForm.MachineTreeClick(Sender: TObject);
 begin
   if MachineTree.Selected.Data = Nil then
     Exit;
-  ConfigData.Lines.LoadFromFile(PrefsForm.BasePath.Directory+'/'+MachineTree.Selected.Text+'/86box.cfg');
+  ConfigData.Lines.LoadFromFile(PrefsForm.BasePath.Directory+DirectorySeparator+MachineTree.Selected.Text+DirectorySeparator+'86box.cfg');
   BoxTitle.Text:=MachineTree.Selected.Text;
-  BoxPath.Caption:=PrefsForm.BasePath.Directory+'/'+MachineTree.Selected.Text;
+  BoxPath.Caption:=PrefsForm.BasePath.Directory+DirectorySeparator+MachineTree.Selected.Text;
 end;
 
 procedure TRetroBoxForm.MachineTreeDblClick(Sender: TObject);
@@ -127,7 +127,7 @@ begin
   SetLength(FProcesses, i+1);
   FProcesses[i]:=TProcess.Create(Self);
   FProcesses[i].Executable:=PrefsForm.EmulatorPath.FileName;
-  FProcesses[i].CurrentDirectory:=PrefsForm.BasePath.Directory+'/'+p^.path;
+  FProcesses[i].CurrentDirectory:=PrefsForm.BasePath.Directory+DirectorySeparator+p^.path;
   FProcesses[i].Active:=True;
   StatusBar.SimpleText:='Systems runnings: '+IntToStr(Length(FProcesses));
 end;
@@ -190,11 +190,11 @@ begin
   try
     if frm.ShowModal <> mrOK then
       Exit;
-    tmp:=PrefsForm.BasePath.Directory+'/'+frm.SystemTitle.Text;
+    tmp:=PrefsForm.BasePath.Directory+DirectorySeparator+frm.SystemTitle.Text;
     CreateDir(tmp);
     if frm.SystemTemplate.ItemIndex > 0 then
     begin
-      CreateDir(tmp+'/nvr');
+      CreateDir(tmp+DirectorySeparator+'nvr');
       tmpl:=@sys_templates[frm.SystemTemplate.ItemIndex];
       ExtractConfig(tmpl^.cfgres, tmpl^.nvres, tmp, tmpl^.nvrFile);
     end;
@@ -214,7 +214,7 @@ begin
   if MachineTree.Selected.Data = Nil then
     Exit;
   BoxSettings.Executable:=PrefsForm.EmulatorPath.FileName;
-  BoxSettings.CurrentDirectory:=PrefsForm.BasePath.Directory+'/'+PBoxInfo(MachineTree.Selected.Data)^.path;
+  BoxSettings.CurrentDirectory:=PrefsForm.BasePath.Directory+DirectorySeparator+PBoxInfo(MachineTree.Selected.Data)^.path;
   BoxSettings.Active:=True;
   BoxSettings.WaitOnExit;
   BoxSettings.Active:=False;
@@ -352,13 +352,13 @@ var
 begin
   res:=TResourceStream.Create(HINSTANCE, cfgres, RT_RCDATA);
   try
-    res.SaveToFile(target+'/86box.cfg');
+    res.SaveToFile(target+DirectorySeparator+'86box.cfg');
   finally
     res.Free;
   end;
   res:=TResourceStream.Create(HINSTANCE, nvres, RT_RCDATA);
   try
-    res.SaveToFile(target+'/nvr/'+nvrFile);
+    res.SaveToFile(target+DirectorySeparator+'nvr'+DirectorySeparator+nvrFile);
   finally
     res.Free;
   end;
