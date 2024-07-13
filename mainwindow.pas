@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, process, Forms, Controls, Graphics, Dialogs, PairSplitter,
-  ComCtrls, StdCtrls, Menus, ExtCtrls, PrefsWindow, boxtype;
+  ComCtrls, StdCtrls, Menus, ExtCtrls, PrefsWindow, boxtype, NewSystemWindow;
 
 type
 
@@ -177,21 +177,33 @@ end;
 procedure TRetroBoxForm.AddMenuClick(Sender: TObject);
 var
   tmp: string;
+  frm: TNewSystemForm;
+  r: TModalResult;
+  tmpl: PBoxTemplate;
 begin
   if MachineTree.Selected = Nil then
   begin
     ShowMessage('Select a category node to add system to.');
     Exit;
   end;
-  tmp:=InputBox(Application.Title, 'Directory for system?', '');
-  if tmp = '' then
-    Exit;
-  CreateDir(PrefsForm.BasePath.Directory+'/'+tmp);
-  CreateDir(PrefsForm.BasePath.Directory+'/'+tmp+'/nvr');
-  ExtractConfig('TALLGRASS', 'IBMPS2_M60', PrefsForm.BasePath.Directory+'/'+tmp, 'ibmps2_m60.nvr');
-  AddSystem(MachineTree.Selected, tmp, tmp);
+  frm:=TNewSystemForm.Create(Nil);
+  try
+    if frm.ShowModal <> mrOK then
+      Exit;
+    tmp:=PrefsForm.BasePath.Directory+'/'+frm.SystemTitle.Text;
+    CreateDir(tmp);
+    if frm.SystemTemplate.ItemIndex > 0 then
+    begin
+      CreateDir(tmp+'/nvr');
+      tmpl:=@sys_templates[frm.SystemTemplate.ItemIndex];
+      ExtractConfig(tmpl^.cfgres, tmpl^.nvres, tmp, tmpl^.nvrFile);
+    end;
+    AddSystem(MachineTree.Selected, frm.SystemTitle.Text, frm.SystemTitle.Text);
+  finally
+    frm.Free;
+  end;
   BoxSettings.Executable:=PrefsForm.EmulatorPath.FileName;
-  BoxSettings.CurrentDirectory:=PrefsForm.BasePath.Directory+'/'+tmp;
+  BoxSettings.CurrentDirectory:=tmp;
   BoxSettings.Active:=True;
   BoxSettings.WaitOnExit;
   BoxSettings.Active:=False;
