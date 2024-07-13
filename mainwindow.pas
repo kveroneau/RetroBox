@@ -10,6 +10,8 @@ uses
 
 type
 
+  EInvalidNode = class(Exception);
+
   { TRetroBoxForm }
 
   TRetroBoxForm = class(TForm)
@@ -94,10 +96,7 @@ var
   tmp: string;
 begin
   if MachineTree.Selected = Nil then
-  begin
-    ShowMessage('Select a category node to import to.');
-    Exit;
-  end;
+    raise EInvalidNode.Create('Select a category node to import to.');
   OpenDialog.Title:='Import System...';
   OpenDialog.InitialDir:=PrefsForm.BasePath.Directory;
   if not OpenDialog.Execute then
@@ -134,7 +133,9 @@ end;
 
 procedure TRetroBoxForm.FormCreate(Sender: TObject);
 begin
-
+  {$IFNDEF DEBUG}
+  Application.ExceptionDialog:=aedOkMessageBox;
+  {$ENDIF}
 end;
 
 procedure TRetroBoxForm.ConfigTabResize(Sender: TObject);
@@ -178,14 +179,10 @@ procedure TRetroBoxForm.AddMenuClick(Sender: TObject);
 var
   tmp: string;
   frm: TNewSystemForm;
-  r: TModalResult;
   tmpl: PBoxTemplate;
 begin
   if MachineTree.Selected = Nil then
-  begin
-    ShowMessage('Select a category node to add system to.');
-    Exit;
-  end;
+    raise EInvalidNode.Create('Select a category node to add system to.');
   frm:=TNewSystemForm.Create(Nil);
   try
     if frm.ShowModal <> mrOK then
@@ -276,7 +273,7 @@ end;
 
 procedure TRetroBoxForm.RenderTree;
 var
-  node, vm: TTreeNode;
+  node: TTreeNode;
   i: integer;
 begin
   with PrefsForm.CategoryList.Items do
