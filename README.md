@@ -12,3 +12,5 @@ managing your various Retro 86Boxes really easy.  I personally prefer seeing suc
 tree, so it is much easier to sort and browse when needed.
 
 I am currently planning out how the creation of new 86Boxes will work, as I do not wish to replicate the exising settings window from 86Box itself.  I was thinking of perhaps having various template configurations which new users of 86Box could use to get themselves started without needing to know how each of the settings for each system shoud be set within 86Box.
+
+![Screenshot](Screenshots/Screenshot_20240713_154542.png)
