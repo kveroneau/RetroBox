@@ -174,8 +174,24 @@ begin
 end;
 
 procedure TRetroBoxForm.AddMenuClick(Sender: TObject);
+var
+  tmp: string;
 begin
-
+  if MachineTree.Selected = Nil then
+  begin
+    ShowMessage('Select a category node to add system to.');
+    Exit;
+  end;
+  tmp:=InputBox(Application.Title, 'Directory for system?', '');
+  if tmp = '' then
+    Exit;
+  CreateDir(PrefsForm.BasePath.Directory+'/'+tmp);
+  AddSystem(MachineTree.Selected, tmp, tmp);
+  BoxSettings.Executable:=PrefsForm.EmulatorPath.FileName;
+  BoxSettings.CurrentDirectory:=PrefsForm.BasePath.Directory+'/'+tmp;
+  BoxSettings.Active:=True;
+  BoxSettings.WaitOnExit;
+  BoxSettings.Active:=False;
 end;
 
 procedure TRetroBoxForm.BoxSettingBtnClick(Sender: TObject);
