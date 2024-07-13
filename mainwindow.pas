@@ -14,10 +14,17 @@ type
 
   TRetroBoxForm = class(TForm)
     AddMenu: TMenuItem;
+    BoxTitle: TEdit;
     ImageList: TImageList;
     ImportMenu: TMenuItem;
     ConfigData: TMemo;
+    Label1: TLabel;
+    Label2: TLabel;
+    BoxPath: TLabel;
+    DeleteMenu: TMenuItem;
+    PrefsMenu: TMenuItem;
     OpenDialog: TOpenDialog;
+    Separator1: TMenuItem;
     TabControl: TPageControl;
     PairSplitter: TPairSplitter;
     StatusBar: TStatusBar;
@@ -29,8 +36,8 @@ type
     InfoPane: TPairSplitterSide;
     MachineTree: TTreeView;
     procedure AddMenuClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
     procedure ConfigTabResize(Sender: TObject);
+    procedure DeleteMenuClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -40,6 +47,7 @@ type
     procedure MachineTreeClick(Sender: TObject);
     procedure MachineTreeDblClick(Sender: TObject);
     procedure PairSplitterResize(Sender: TObject);
+    procedure PrefsMenuClick(Sender: TObject);
     procedure TabControlResize(Sender: TObject);
     procedure TimerTimer(Sender: TObject);
     procedure TreePaneResize(Sender: TObject);
@@ -99,6 +107,8 @@ begin
   if MachineTree.Selected.Data = Nil then
     Exit;
   ConfigData.Lines.LoadFromFile(PrefsForm.BasePath.Directory+'/'+MachineTree.Selected.Text+'/86box.cfg');
+  BoxTitle.Text:=MachineTree.Selected.Text;
+  BoxPath.Caption:=PrefsForm.BasePath.Directory+'/'+MachineTree.Selected.Text;
 end;
 
 procedure TRetroBoxForm.MachineTreeDblClick(Sender: TObject);
@@ -123,15 +133,25 @@ begin
 
 end;
 
-procedure TRetroBoxForm.Button1Click(Sender: TObject);
-begin
-  PrefsForm.ShowModal;
-end;
-
 procedure TRetroBoxForm.ConfigTabResize(Sender: TObject);
 begin
   ConfigData.Width:=ConfigTab.ClientWidth;
   ConfigData.Height:=ConfigTab.ClientHeight;
+end;
+
+procedure TRetroBoxForm.DeleteMenuClick(Sender: TObject);
+var
+  p: PBoxInfo;
+begin
+  if MachineTree.Selected.Data = Nil then
+    Exit;
+  if MessageDlg(Application.Title, 'Are you sure you want to remove '+MachineTree.Selected.Text+'?', mtConfirmation, mbYesNo, '') = mrYes then
+  begin
+    p:=MachineTree.Selected.Data;
+    Dispose(p);
+    MachineTree.Items.Delete(MachineTree.Selected);
+    SaveSystems;
+  end;
 end;
 
 procedure TRetroBoxForm.FormClose(Sender: TObject; var CloseAction: TCloseAction
@@ -174,6 +194,15 @@ begin
   MachineTree.Height:=TreePane.ClientHeight;
   TabControl.Width:=InfoPane.ClientWidth;
   TabControl.Height:=InfoPane.ClientHeight;
+end;
+
+procedure TRetroBoxForm.PrefsMenuClick(Sender: TObject);
+begin
+  PrefsForm.ShowModal;
+  FormDestroy(Sender);
+  MachineTree.Items.Clear;
+  RenderTree;
+  LoadSystems;
 end;
 
 procedure TRetroBoxForm.TabControlResize(Sender: TObject);
