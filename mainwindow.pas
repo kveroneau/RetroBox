@@ -6,7 +6,8 @@ interface
 
 uses
   Classes, SysUtils, process, Forms, Controls, Graphics, Dialogs, PairSplitter,
-  ComCtrls, StdCtrls, Menus, ExtCtrls, PrefsWindow, boxtype, NewSystemWindow;
+  ComCtrls, StdCtrls, Menus, ExtCtrls, Buttons, PrefsWindow, boxtype,
+  NewSystemWindow, IconSelectWindow;
 
 type
 
@@ -25,10 +26,12 @@ type
     Label2: TLabel;
     BoxPath: TLabel;
     DeleteMenu: TMenuItem;
+    Label3: TLabel;
     PrefsMenu: TMenuItem;
     OpenDialog: TOpenDialog;
     BoxSettings: TProcess;
     Separator1: TMenuItem;
+    BoxIcon: TSpeedButton;
     TabControl: TPageControl;
     PairSplitter: TPairSplitter;
     StatusBar: TStatusBar;
@@ -40,6 +43,7 @@ type
     InfoPane: TPairSplitterSide;
     MachineTree: TTreeView;
     procedure AddMenuClick(Sender: TObject);
+    procedure BoxIconClick(Sender: TObject);
     procedure BoxSettingBtnClick(Sender: TObject);
     procedure ConfigTabResize(Sender: TObject);
     procedure DeleteMenuClick(Sender: TObject);
@@ -112,6 +116,7 @@ begin
   ConfigData.Lines.LoadFromFile(PrefsForm.BasePath.Directory+DirectorySeparator+MachineTree.Selected.Text+DirectorySeparator+'86box.cfg');
   BoxTitle.Text:=MachineTree.Selected.Text;
   BoxPath.Caption:=PrefsForm.BasePath.Directory+DirectorySeparator+MachineTree.Selected.Text;
+  BoxIcon.ImageIndex:=PBoxInfo(MachineTree.Selected.Data)^.icon;
 end;
 
 procedure TRetroBoxForm.MachineTreeDblClick(Sender: TObject);
@@ -204,6 +209,19 @@ begin
   BoxSettings.Active:=True;
   BoxSettings.WaitOnExit;
   BoxSettings.Active:=False;
+end;
+
+procedure TRetroBoxForm.BoxIconClick(Sender: TObject);
+begin
+  IconSelectForm.ShowModal;
+  if IconSelectForm.IconIndex > -1 then
+  begin
+    PBoxInfo(MachineTree.Selected.Data)^.icon:=IconSelectForm.IconList.Selected.ImageIndex;
+    MachineTree.Selected.ImageIndex:=IconSelectForm.IconIndex;
+    MachineTree.Selected.SelectedIndex:=IconSelectForm.IconIndex;
+    BoxIcon.ImageIndex:=MachineTree.Selected.ImageIndex;
+    SaveSystems;
+  end;
 end;
 
 procedure TRetroBoxForm.BoxSettingBtnClick(Sender: TObject);

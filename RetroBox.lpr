@@ -10,7 +10,7 @@ uses
   athreads,
   {$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, MainWindow, boxtype, PrefsWindow, NewSystemWindow;
+  Forms, MainWindow, boxtype, PrefsWindow, NewSystemWindow, IconSelectWindow;
 
 {$R *.res}
 
@@ -21,6 +21,7 @@ begin
   Application.Initialize;
   Application.CreateForm(TRetroBoxForm, RetroBoxForm);
   Application.CreateForm(TPrefsForm, PrefsForm);
+  Application.CreateForm(TIconSelectForm, IconSelectForm);
   Application.Run;
 end.
 

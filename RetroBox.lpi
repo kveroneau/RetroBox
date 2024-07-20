@@ -99,6 +99,11 @@
               </Win32>
             </Options>
           </Linking>
+          <Other>
+            <OtherDefines Count="1">
+              <Define0 Value="DEBUG"/>
+            </OtherDefines>
+          </Other>
         </CompilerOptions>
       </Item>
     </BuildModes>
@@ -149,6 +154,14 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="NewSystemWindow"/>
+      </Unit>
+      <Unit>
+        <Filename Value="iconselectwindow.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="IconSelectForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="IconSelectWindow"/>
       </Unit>
     </Units>
   </ProjectOptions>
