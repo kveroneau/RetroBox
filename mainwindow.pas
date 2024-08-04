@@ -27,6 +27,7 @@ type
     BoxPath: TLabel;
     DeleteMenu: TMenuItem;
     Label3: TLabel;
+    BoxJournal: TMemo;
     PrefsMenu: TMenuItem;
     OpenDialog: TOpenDialog;
     BoxSettings: TProcess;
@@ -37,6 +38,7 @@ type
     StatusBar: TStatusBar;
     InfoTab: TTabSheet;
     ConfigTab: TTabSheet;
+    JournalTab: TTabSheet;
     Timer: TTimer;
     TreeMenu: TPopupMenu;
     TreePane: TPairSplitterSide;
@@ -44,6 +46,8 @@ type
     MachineTree: TTreeView;
     procedure AddMenuClick(Sender: TObject);
     procedure BoxIconClick(Sender: TObject);
+    procedure BoxJournalExit(Sender: TObject);
+    procedure BoxJournalKeyPress(Sender: TObject; var Key: char);
     procedure BoxSettingBtnClick(Sender: TObject);
     procedure ConfigTabResize(Sender: TObject);
     procedure DeleteMenuClick(Sender: TObject);
@@ -53,6 +57,7 @@ type
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure ImportMenuClick(Sender: TObject);
+    procedure JournalTabResize(Sender: TObject);
     procedure MachineTreeClick(Sender: TObject);
     procedure MachineTreeDblClick(Sender: TObject);
     procedure PairSplitterResize(Sender: TObject);
@@ -109,6 +114,12 @@ begin
   AddSystem(MachineTree.Selected, ExtractFileName(tmp), ExtractFileName(tmp));
 end;
 
+procedure TRetroBoxForm.JournalTabResize(Sender: TObject);
+begin
+  BoxJournal.Width:=JournalTab.ClientWidth;
+  BoxJournal.Height:=JournalTab.ClientHeight;
+end;
+
 procedure TRetroBoxForm.MachineTreeClick(Sender: TObject);
 begin
   if MachineTree.Selected.Data = Nil then
@@ -117,6 +128,11 @@ begin
   BoxTitle.Text:=MachineTree.Selected.Text;
   BoxPath.Caption:=PrefsForm.BasePath.Directory+DirectorySeparator+MachineTree.Selected.Text;
   BoxIcon.ImageIndex:=PBoxInfo(MachineTree.Selected.Data)^.icon;
+  if FileExists(BoxPath.Caption+DirectorySeparator+'journal.txt') then
+    BoxJournal.Lines.LoadFromFile(BoxPath.Caption+DirectorySeparator+'journal.txt')
+  else
+    BoxJournal.Clear;
+  BoxJournal.Modified:=False;
 end;
 
 procedure TRetroBoxForm.MachineTreeDblClick(Sender: TObject);
@@ -224,6 +240,27 @@ begin
   end;
 end;
 
+procedure TRetroBoxForm.BoxJournalExit(Sender: TObject);
+begin
+  if BoxJournal.Modified then
+  begin
+    BoxJournal.Lines.SaveToFile(BoxPath.Caption+DirectorySeparator+'journal.txt');
+    BoxJournal.Modified:=False;
+  end;
+end;
+
+procedure TRetroBoxForm.BoxJournalKeyPress(Sender: TObject; var Key: char);
+var
+  line: string;
+begin
+  if Key = #13 then
+  begin
+    line:=BoxJournal.Lines.Strings[BoxJournal.Lines.Count-1];
+    if line = 'dt' then
+      BoxJournal.Lines.Strings[BoxJournal.Lines.Count-1]:=FormatDateTime('dddd mmmm d, yyyy "at" hh:nn', Now);
+  end;
+end;
+
 procedure TRetroBoxForm.BoxSettingBtnClick(Sender: TObject);
 begin
   if MachineTree.Selected.Data = Nil then
@@ -269,6 +306,8 @@ procedure TRetroBoxForm.TabControlResize(Sender: TObject);
 begin
   ConfigTab.Width:=TabControl.ClientWidth;
   ConfigTab.Height:=TabControl.ClientHeight;
+  JournalTab.Width:=TabControl.ClientWidth;
+  JournalTab.Height:=TabControl.ClientHeight;
 end;
 
 procedure TRetroBoxForm.TimerTimer(Sender: TObject);

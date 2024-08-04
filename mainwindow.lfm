@@ -147,6 +147,25 @@ object RetroBoxForm: TRetroBoxForm
             TabOrder = 0
           end
         end
+        object JournalTab: TTabSheet
+          Caption = 'Journal'
+          ClientHeight = 248
+          ClientWidth = 292
+          OnResize = JournalTabResize
+          object BoxJournal: TMemo
+            Left = 0
+            Height = 90
+            Top = 0
+            Width = 150
+            Lines.Strings = (
+              'BoxJournal'
+            )
+            OnExit = BoxJournalExit
+            OnKeyPress = BoxJournalKeyPress
+            ScrollBars = ssAutoVertical
+            TabOrder = 0
+          end
+        end
       end
     end
   end
