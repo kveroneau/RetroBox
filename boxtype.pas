@@ -25,7 +25,7 @@ type
   end;
 
 var
-  sys_templates: Array[1..5] of TBoxTemplate;
+  sys_templates: Array[1..10] of TBoxTemplate;
 
 implementation
 
@@ -65,6 +65,41 @@ begin
     cfgres:='APTIVA';
     nvres:='P5A';
     nvrFile:='p5a.nvr';
+  end;
+  with sys_templates[6] do
+  begin
+    title:='High-end 1988';
+    cfgres:='1988';
+    nvres:='DESKPRO386_05_1988';
+    nvrFile:='deskpro386_05_1988.nvr';
+  end;
+  with sys_templates[7] do
+  begin
+    title:='High-end 1990';
+    cfgres:='1990';
+    nvres:='AMI495';
+    nvrFile:='ami495.nvr';
+  end;
+  with sys_templates[8] do
+  begin
+    title:='High-end 1992';
+    cfgres:='1992';
+    nvres:='PB410A';
+    nvrFile:='pb410a.nvr';
+  end;
+  with sys_templates[9] do
+  begin
+    title:='High-end 1994';
+    cfgres:='1994';
+    nvres:='ACERV30';
+    nvrFile:='acerv30.nvr';
+  end;
+  with sys_templates[10] do
+  begin
+    title:='High-end 1996';
+    cfgres:='1996';
+    nvres:='PB810';
+    nvrFile:='pb810.nvr';
   end;
 end;
 

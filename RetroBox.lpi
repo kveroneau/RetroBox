@@ -12,7 +12,7 @@
         <DpiAware Value="True"/>
       </XPManifest>
       <Icon Value="0"/>
-      <Resources Count="10">
+      <Resources Count="20">
         <Resource_0 FileName="templates/TallGrass.cfg" Type="RCDATA" ResourceName="TALLGRASS"/>
         <Resource_1 FileName="templates/ibmps2_m60.nvr" Type="RCDATA" ResourceName="IBMPS2_M60"/>
         <Resource_2 FileName="templates/asus386.cfg" Type="RCDATA" ResourceName="ASUS386"/>
@@ -23,6 +23,16 @@
         <Resource_7 FileName="templates/opti560l.nvr" Type="RCDATA" ResourceName="OPTI560L"/>
         <Resource_8 FileName="templates/aptiva.cfg" Type="RCDATA" ResourceName="APTIVA"/>
         <Resource_9 FileName="templates/p5a.nvr" Type="RCDATA" ResourceName="P5A"/>
+        <Resource_10 FileName="templates/1988.cfg" Type="RCDATA" ResourceName="1988"/>
+        <Resource_11 FileName="templates/deskpro386_05_1988.nvr" Type="RCDATA" ResourceName="DESKPRO386_05_1988"/>
+        <Resource_12 FileName="templates/1990.cfg" Type="RCDATA" ResourceName="1990"/>
+        <Resource_13 FileName="templates/ami495.nvr" Type="RCDATA" ResourceName="AMI495"/>
+        <Resource_14 FileName="templates/1992.cfg" Type="RCDATA" ResourceName="1992"/>
+        <Resource_15 FileName="templates/pb410a.nvr" Type="RCDATA" ResourceName="PB410A"/>
+        <Resource_16 FileName="templates/1994.cfg" Type="RCDATA" ResourceName="1994"/>
+        <Resource_17 FileName="templates/acerv30.nvr" Type="RCDATA" ResourceName="ACERV30"/>
+        <Resource_18 FileName="templates/1996.cfg" Type="RCDATA" ResourceName="1996"/>
+        <Resource_19 FileName="templates/pb810.nvr" Type="RCDATA" ResourceName="PB810"/>
       </Resources>
     </General>
     <BuildModes>
